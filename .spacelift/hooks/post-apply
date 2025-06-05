@@ -1,4 +1,5 @@
 #!/bin/bash
+chmod +x .spacelift/hooks/post-apply
 set -e
 
 echo "[INFO] Génération clé SSH"
