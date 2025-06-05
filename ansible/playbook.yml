@@ -1,45 +1,19 @@
----
-- name: Configure Apache on Ubuntu EC2
-  hosts: all
-  become: yes
-  vars:
-    apache_pkg: apache2
-    web_root: /var/www/html
-
+- hosts: all
+  become: True
   tasks:
-    - name: Update APT cache
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-
-    - name: Install Apache package
-      apt:
-        name: "{{ apache_pkg }}"
-        state: present
-
-    - name: Ensure Apache is running & enabled
+    - name: bon repo
+      command: amazon-linux-extras enable nginx1
+    - name: Install packages
+      yum:
+        name: "nginx"
+        state: "present"
+      when: result is success
+    - name: Start nginx server
       service:
-        name: "{{ apache_pkg }}"
+        name: nginx
         state: started
-        enabled: yes
-      when: not ansible_check_mode  # Skip this task when in check mode
-
-    - name: Deploy custom index.html
+        enabled: True
+    - name: Deploy static website
       copy:
-        dest: "{{ web_root }}/index.html"
-        content: |
-          <!DOCTYPE html>
-          <html>
-          <body>
-            <h1>Hello from Ansible!</h1>
-            <p>Deployed via Spacelift!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
-          </body>
-          </html>
-      notify: Reload Apache
-
-  handlers:
-    - name: Reload Apache
-      service:
-        name: "{{ apache_pkg }}"
-        state: reloaded
-      when: not ansible_check_mode  # Also skip the handler when in check mode
+        src: index.html # We have define a html page 
+        dest: /var/www/html/
