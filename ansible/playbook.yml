@@ -1,4 +1,4 @@
-- hosts: - hosts: 44.198.178.59  # Ton IP publique
+- hosts: 44.198.178.59  # Ton IP publique
   become: True
   tasks:
     - name: bon repo
