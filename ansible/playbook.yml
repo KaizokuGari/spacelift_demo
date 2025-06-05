@@ -9,7 +9,6 @@
       yum:
         name: "nginx"
         state: "present"
-      when: repo_enable_result.rc == 0
     - name: Start nginx server
       service:
         name: nginx
