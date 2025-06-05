@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "✅ Hook post-apply déclenché"
 chmod +x .spacelift/hooks/post-apply
 set -e
 
