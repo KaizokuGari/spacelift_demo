@@ -68,7 +68,7 @@ resource "aws_route_table" "demo_rt" {
 resource "aws_subnet" "demo_subnet" {
   vpc_id                  = aws_vpc.demo_vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-west-2a"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -118,7 +118,7 @@ resource "aws_security_group" "demo_sg" {
 
 # EC2 Instance
 resource "aws_instance" "demo_instance" {
-  ami                    = "ami-03f65b8614a860c29" // Replace with a valid AMI ID for your region
+  ami                    = "ami-0779caf41f9ba54f0" // Replace with a valid AMI ID for your region
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.demo_subnet.id
   key_name               = aws_key_pair.demo_keypair.key_name
