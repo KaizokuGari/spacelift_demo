@@ -9,7 +9,7 @@
       yum:
         name: "nginx"
         state: "present"
-      when: result is success
+      when: repo_enable_result.rc == 0
     - name: Start nginx server
       service:
         name: nginx
