@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+echo "[INFO] Génération clé SSH"
+echo "$SPACELIFT_OUTPUT_private_key_pem" > demo_key.pem
+chmod 600 demo_key.pem
+
+echo "[INFO] Génération de l’inventaire"
+cat <<EOF > inventory.ini
+[web]
+${SPACELIFT_OUTPUT_public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=demo_key.pem
+EOF
+
+echo "[INFO] Lancement du playbook"
+ansible-playbook -i inventory.ini ansible/playbook.yml
